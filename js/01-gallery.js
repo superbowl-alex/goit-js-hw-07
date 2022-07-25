@@ -24,7 +24,7 @@ function createGalleryMarkup(images) {
 
 function onGalleryItemClick(event) {
   event.preventDefault();
-  if (!event.target.classList.contains("gallery__image")) {
+  if (event.target.nodeName !== "IMG") {
     return;
   }
   onModalOpen(event);
