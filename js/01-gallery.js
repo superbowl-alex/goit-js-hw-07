@@ -31,18 +31,26 @@ function onGalleryItemClick(event) {
 }
 
 function onModalOpen(event) {
-  window.addEventListener("keydown", onEscKeyPress);
-  instance = basicLightbox.create(`<img src="${event.target.dataset.source}">`);
+  instance = basicLightbox.create(
+    `<img src="${event.target.dataset.source}">`,
+    {
+      onShow: (instance) => {
+        window.addEventListener("keydown", onEscKeyPress);
+      },
+      onClose: (instance) => {
+        window.removeEventListener("keydown", onEscKeyPress);
+      },
+    }
+  );
   instance.show();
+}
+
+function onModalClose() {
+  instance.close();
 }
 
 function onEscKeyPress(event) {
   if (event.code === "Escape") {
     onModalClose();
   }
-}
-
-function onModalClose() {
-  window.removeEventListener("keydown", onEscKeyPress);
-  instance.close();
 }
